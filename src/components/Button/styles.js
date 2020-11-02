@@ -10,15 +10,17 @@ const SCButton = styled.button`
   color: #ffce5c;
   transition: all 300ms;
   border: 1px solid #0001;
+  width: 80px;
+  height: 80px;
   &:hover {
     color: #00a3f5;
     border: 1px solid #ffce5c22;
   }
   ${(props) => {
     if (props.section === "functions" || props.section === "operators") {
-      return "display: inline-block; width: 80px; height: 80px; color: #d63c6b; &:hover { color: #b696a0; }";
+      return "color: black; &:hover { color: darkgrey; } &:last-child{width:100%;}";
     } else if (props.section === "numbers") {
-      return "display: block; position: relative; width: 80px; height: 80px; float: left; &:last-child { width: 100%; }";
+      return "color:darkgrey; &:hover { color: black; }";
     }
   }}
 `;
