@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import SCButton from "./styles";
 
-const Button = ({ value, section, clickHandler }) => (
+const Button = ({ value, type, clickHandler }) => (
   <SCButton
-    section={section}
+    type={type}
     onClick={() => {
       clickHandler(value);
     }}

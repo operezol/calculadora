@@ -17,9 +17,9 @@ const SCButton = styled.button`
     border: 1px solid #ffce5c22;
   }
   ${(props) => {
-    if (props.section === "functions" || props.section === "operators") {
+    if (props.type === "expression") {
       return "color: black; &:hover { color: darkgrey; } &:last-child{width:100%;}";
-    } else if (props.section === "numbers") {
+    } else if (props.section === "function") {
       return "color:darkgrey; &:hover { color: black; }";
     }
   }}
