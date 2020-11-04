@@ -1,63 +1,70 @@
 import React, { useState } from "react";
+import words from "lodash.words";
 import Result from "components/Result";
 import Button from "components/Button";
 import { SCApp } from "./styles";
 
 const App = () => {
   const [expression, setExpression] = useState("");
+
+  const operators = words(expression, /[^-^+^*^/]+/g);
+
   const addToExpresion = (text) => {
-    if (expression == "0") {
-      setExpression(text);
+    if (expression === "0") {
+      setExpression(`${text}`);
+    } else {
+      setExpression(`${expression}${text}`);
     }
-    setExpression(expression + text);
   };
+
   const deleteExpression = () => {
-    setExpression("0");
+    setExpression("");
   };
+
   const backExpression = () => {
-    const string = expression.toString();
-    const trimmedExpression = string.substring(0, string.length - 1);
-    setExpression(trimmedExpression);
+    setExpression(expression.substring(0, expression.length - 1));
   };
+
   const evaluateExpression = () => {
-    const stringExpression = expression.toString();
-    const evaluatedExpression = eval(stringExpression);
-    setExpression(evaluatedExpression);
+    setExpression(eval(expression).toString());
   };
 
   const buttons = [
-    { value: "1", type: "expression", clickHandler: addToExpresion },
-    { value: "2", type: "expression", clickHandler: addToExpresion },
-    { value: "3", type: "expression", clickHandler: addToExpresion },
-    { value: "+", type: "function", clickHandler: addToExpresion },
-    { value: "4", type: "expression", clickHandler: addToExpresion },
-    { value: "5", type: "expression", clickHandler: addToExpresion },
-    { value: "6", type: "expression", clickHandler: addToExpresion },
-    { value: "-", type: "function", clickHandler: addToExpresion },
-    { value: "7", type: "expression", clickHandler: addToExpresion },
-    { value: "8", type: "expression", clickHandler: addToExpresion },
-    { value: "9", type: "expression", clickHandler: addToExpresion },
-    { value: "*", type: "function", clickHandler: addToExpresion },
-    { value: "C", type: "function", clickHandler: deleteExpression },
-    { value: "0", type: "expression", clickHandler: addToExpresion },
-    { value: "<-", type: "function", clickHandler: backExpression },
-    { value: "/", type: "function", clickHandler: addToExpresion },
-    { value: "=", type: "function", clickHandler: evaluateExpression },
+    { value: "1", type: "number", clickHandler: addToExpresion },
+    { value: "2", type: "number", clickHandler: addToExpresion },
+    { value: "3", type: "number", clickHandler: addToExpresion },
+    { value: "+", type: "", clickHandler: addToExpresion },
+    { value: "4", type: "number", clickHandler: addToExpresion },
+    { value: "5", type: "number", clickHandler: addToExpresion },
+    { value: "6", type: "number", clickHandler: addToExpresion },
+    { value: "-", type: "", clickHandler: addToExpresion },
+    { value: "7", type: "number", clickHandler: addToExpresion },
+    { value: "8", type: "number", clickHandler: addToExpresion },
+    { value: "9", type: "number", clickHandler: addToExpresion },
+    { value: "*", type: "", clickHandler: addToExpresion },
+    { value: "C", type: "", clickHandler: deleteExpression },
+    { value: "0", type: "number", clickHandler: addToExpresion },
+    { value: "<-", type: "", clickHandler: backExpression },
+    { value: "/", type: "", clickHandler: addToExpresion },
+    { value: "=", type: "", clickHandler: evaluateExpression },
   ];
+
   const renderButtons = () =>
-    buttons.map((button) => (
+    buttons.map(({ value, type, clickHandler }, index) => (
       <Button
-        value={button.value}
-        type={button.type}
+        key={index}
+        value={value}
+        type={type}
         clickHandler={() => {
-          button.clickHandler(button.value);
+          clickHandler(value);
         }}
       />
     ));
-
+  const resultValue =
+    operators.length > 0 ? operators[operators.length - 1] : 0;
   return (
     <SCApp>
-      <Result value={expression} />
+      <Result value={resultValue} />
       {renderButtons()}
     </SCApp>
   );

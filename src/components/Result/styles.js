@@ -12,6 +12,7 @@ const SCResult = styled.div`
   direction: rtl;
   white-space: nowrap;
   box-sizing: border-box;
+  border: 1px solid black;
 `;
 SCResult.displayName = "SCResult";
 export default SCResult;
